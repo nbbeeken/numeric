@@ -18,19 +18,24 @@ export function parseNumber(text: string): number | bigint {
 	text = text.toLowerCase();
 	text = text.split('_').join(''); // delete separators
 
+	const radix = determineRadix(text);
+
 	const isBigInt = text.endsWith('n');
 	if (isBigInt) {
 		text = text.slice(0, text.length - 1);
 	}
 
-	const isFloat = text.includes('.');
-	const isScientific = text.includes('e') || text.includes('E');
+	if (radix === 16 || radix === 8 || radix === 2) {
+		text = text.slice(2);
+	} else {
+		const isFloat = text.includes('.');
+		const isScientific = text.includes('e') || text.includes('E');
+		if (isFloat || isScientific) {
+			return Number.parseFloat(text);
+		}
+	}
 
-	const radix = !isFloat && !isScientific ? determineRadix(text) : 10;
-
-	if (isFloat && isScientific) {
-		return Number.parseFloat(text);
-	} else if (isBigInt) {
+	if (isBigInt) {
 		return BigInt(text);
 	} else {
 		return Number.parseInt(text, radix);

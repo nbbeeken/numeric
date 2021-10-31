@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { parseNumber } from './parser';
+import { hexSequence, logBase } from './utils';
 
 export async function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(
@@ -32,10 +33,32 @@ async function createHoverProvider(language: string): Promise<vscode.HoverProvid
 	return makeProvider((word: string) => {
 		const n = parseNumber(word);
 
-		const hex = n.toString(16);
-		const oct = n.toString(8);
-		const bin = n.toString(2);
+		if (typeof n === 'number' && !Number.isInteger(n)) {
+			const bytes = new Uint8Array(new Float64Array([n]).buffer);
+			const leSeq = [...bytes].reverse();
+			const bytesString = `
+			LE: \`${hexSequence(leSeq.slice(0, 4))}_${hexSequence(leSeq.slice(5, 8))}\`
 
-		return new vscode.MarkdownString(`\`0x${hex}\`\n\n\`0o${oct}\`\n\n\`0b${bin}\``);
+			BE: \`${hexSequence(bytes.slice(0, 4))}_${hexSequence(bytes.slice(5, 8))}\`
+			`
+				.split('\t')
+				.join('');
+			return new vscode.MarkdownString(bytesString);
+		}
+
+		const dec = n.toString(0xa);
+		let hex = n.toString(0xf);
+		hex = hex.padStart(Math.max(...[hex.length, 8, 16]), '0');
+
+		let oct = n.toString(0x8);
+		oct = oct.padStart(Math.max(...[oct.length, 3]), '0');
+
+		let bin = n.toString(0x2);
+		bin = bin.padStart(Math.max(...[bin.length, 32]), '0');
+
+		const translations = [dec, `0x${hex}`, `0o${oct}`, `0b${bin}`];
+		const string = '`' + translations.join('`\n\n`') + '`';
+
+		return new vscode.MarkdownString(string);
 	});
 }

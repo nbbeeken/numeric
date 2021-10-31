@@ -1,3 +1,9 @@
+export function hexSequence(seq: ArrayLike<number | bigint>): string {
+	const array = Array.from(seq);
+	const strings = array.map((n) => n.toString(16).padStart(2, '0'));
+	return strings.join('');
+}
+
 export function tryFn<F extends (...args: any) => any>(
 	fn: F,
 	...args: Parameters<F>
@@ -10,4 +16,8 @@ export function tryFn<F extends (...args: any) => any>(
 		error = thrownError instanceof Error ? thrownError : new Error(String(thrownError));
 	}
 	return { result, error };
+}
+
+export function logBase(n: number, base: number) {
+	return Math.log(n) / Math.log(base);
 }
