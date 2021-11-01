@@ -8,3 +8,5 @@ webpack.config.js
 vsc-extension-quickstart.md
 **/tsconfig.json
 **/.eslintrc.json
+workspace/
+src/test
