@@ -4,7 +4,7 @@
   "displayName": "numeric",
   "icon": "images/numeric.png",
   "description": "Hover to see numeric translations",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "engines": {
     "vscode": "^1.61.0"
   },
@@ -37,7 +37,7 @@
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
-    "release": "standard-version -i changelog.md && git push --follow-tags origin main",
+    "release": "standard-version -i changelog.md",
     "publish": "vsce publish"
   },
   "devDependencies": {

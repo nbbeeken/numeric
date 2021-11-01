@@ -12,25 +12,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2-beta
+      - uses: actions/setup-node@v2
         with:
           node-version: "16"
 
       - run: npm install
 
-      # makes ./numeric-{version}.vsix
       - name: Run headless test
         uses: GabrielBB/xvfb-action@v1.2
         with:
           run: |
             npm test
 
-      - run: npm run package
-
       - name: Get the version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
         shell: bash
+
+      # makes ./numeric-v{version}.vsix
+      - run: npx vsce package --out ./numeric-${{ steps.get_version.outputs.VERSION }}.vsix
 
       - name: Create Release
         id: create_release
@@ -49,7 +49,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          # This pulls from the CREATE RELEASE step above,
+          # This pulls from the create_release and get_version steps above
           # referencing it's ID to get its outputs object, which include a `upload_url`.
           # See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
           upload_url: ${{ steps.create_release.outputs.upload_url }}
