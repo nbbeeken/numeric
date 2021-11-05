@@ -1,6 +1,6 @@
 import { hexSequence } from './utils';
 
-function determineRadix(text: string) {
+export function determineRadix(text: string) {
 	if (text.startsWith('0x')) {
 		return 16;
 	} else if (text.startsWith('0o')) {
