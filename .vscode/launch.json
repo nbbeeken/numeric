@@ -10,6 +10,7 @@
 			"type": "extensionHost",
 			"request": "launch",
 			"args": [
+				"--extensionDevelopmentKind=web",
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"${workspaceFolder}/workspace"
 			],
