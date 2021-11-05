@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/nbbeeken/numeric/compare/v0.0.2...v0.0.3) (2021-11-05)
+
+
+### Features
+
+* support web extension mode ([03e4e01](https://github.com/nbbeeken/numeric/commit/03e4e013f64a753bd0874ab4fe0ad8575f0ecd3a))
+
+
+### Bug Fixes
+
+* hex encoding is now actually base 16 ([f7a680f](https://github.com/nbbeeken/numeric/commit/f7a680f61023000f6427d8c36a37dd18025943fa))
+
 ### 0.0.2 (2021-11-01)
 
 
