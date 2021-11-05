@@ -1,3 +1,5 @@
+import { hexSequence } from './utils';
+
 function determineRadix(text: string) {
 	if (text.startsWith('0x')) {
 		return 16;
@@ -40,4 +42,35 @@ export function parseNumber(text: string): number | bigint {
 	} else {
 		return Number.parseInt(text, radix);
 	}
+}
+
+export function makeMarkdown(n: number | bigint): string {
+	if (typeof n === 'number' && !Number.isInteger(n)) {
+		const bytes = new Uint8Array(new Float64Array([n]).buffer);
+		const leSeq = [...bytes].reverse();
+		const bytesString = `
+		LE: \`${hexSequence(leSeq.slice(0, 4))}_${hexSequence(leSeq.slice(5, 8))}\`
+
+		BE: \`${hexSequence(bytes.slice(0, 4))}_${hexSequence(bytes.slice(5, 8))}\`
+		`
+			.split('\t')
+			.join('');
+		return bytesString;
+	}
+
+	const dec = n.toLocaleString();
+
+	let hex = n.toString(0x10);
+	hex = hex.padStart(Math.max(...[hex.length, 8, 16]), '0');
+
+	let oct = n.toString(0x8);
+	oct = oct.padStart(Math.max(...[oct.length, 3]), '0');
+
+	let bin = n.toString(0x2);
+	bin = bin.padStart(Math.max(...[bin.length, 32]), '0');
+
+	const translations = [dec, `0x${hex}`, `0o${oct}`, `0b${bin}`];
+	const string = '`' + translations.join('`\n\n`') + '`';
+
+	return string;
 }

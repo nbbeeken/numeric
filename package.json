@@ -12,13 +12,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onLanguage:javascript",
-    "onLanguage:java",
-    "onLanguage:python",
-    "onLanguage:c",
-    "onLanguage:cpp",
-    "onLanguage:rust",
-    "onLanguage:swift"
+    "*"
   ],
   "license": "Apache-2.0",
   "repository": {
