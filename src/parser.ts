@@ -1,5 +1,13 @@
 import { hexSequence } from './utils';
 
+export const NUMERIC_RX = {
+	hex: /[-+]?0x[0-9a-f][0-9a-f_]+/i,
+	oct: /[-+]?0o[0-7][0-7_]+/,
+	bin: /[-+]?0b[01][01_]+/,
+	dec: /[-+]?[0-9][0-9_]+/,
+	flo: /[-+]?([0-9]*\.?[0-9]+(e[-+]?[0-9]+)?)/i,
+} as const;
+
 export function determineRadix(text: string) {
 	if (text.startsWith('0x')) {
 		return 16;
@@ -15,6 +23,10 @@ export function determineRadix(text: string) {
 export function parseNumber(text: string): number | bigint {
 	if (text.length === 0) {
 		return 0;
+	}
+
+	if (text === 'NaN') {
+		return NaN;
 	}
 
 	text = text.toLowerCase();
@@ -40,7 +52,11 @@ export function parseNumber(text: string): number | bigint {
 	if (isBigInt) {
 		return BigInt(text);
 	} else {
-		return Number.parseInt(text, radix);
+		const n = Number.parseInt(text, radix);
+		if (!Number.isInteger(n)) {
+			throw new Error(`You cannot have a non-int, got ${n}`);
+		}
+		return n;
 	}
 }
 
