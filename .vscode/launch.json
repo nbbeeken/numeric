@@ -13,7 +13,7 @@
 			"args": [
 				"--extensionDevelopmentKind=web",
 				// "--disable-extensions",
-				"--extensionDevelopmentPath=${workspaceFolder}",
+				"--extensionDevelopmentPath=D:/Dev/numeric/numeric",
 				// "${workspaceFolder}/workspace"
 			],
 			"outFiles": [

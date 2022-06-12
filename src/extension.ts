@@ -3,8 +3,7 @@ import { Logger } from './logger';
 import { makeMarkdown, NUMERIC_RX, parseNumber } from './parser';
 import { tryFn } from './utils';
 
-const DEBUG_MODE = true;
-let logger: Logger;
+export let logger: Logger;
 
 export async function activate(context: vscode.ExtensionContext) {
 	logger = new Logger();
@@ -50,8 +49,12 @@ async function createHoverProvider(): Promise<vscode.HoverProvider> {
 			}
 		}
 
-		logger.log('matchedText', matchedText);
-		logger.log('bestMatch', bestMatch);
+		if (matchedText?.includes(' ') || matchedText?.includes('\n') || bestMatch == null) {
+			return;
+		}
+
+		logger.log('matchedText', JSON.stringify(matchedText), typeof matchedText);
+		logger.log('bestMatch', JSON.stringify(bestMatch), typeof bestMatch);
 
 		if (typeof matchedText !== 'string') {
 			throw new Error('Must match something!!!');
@@ -65,9 +68,6 @@ async function createHoverProvider(): Promise<vscode.HoverProvider> {
 			return new vscode.MarkdownString(`issue parsing - ${error}`);
 		}
 		let markdown = makeMarkdown(result);
-		if (DEBUG_MODE) {
-			markdown += `\n\n input ${word}`;
-		}
 		return new vscode.MarkdownString(markdown);
 	});
 }
