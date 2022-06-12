@@ -71,11 +71,11 @@ export function makeMarkdown(n: number | bigint): string {
 		if (!Number.isInteger(n) || Object.is(n, -0)) {
 			const bytes = new Uint8Array(new Float64Array([n]).buffer);
 			const leSeq = [...bytes].reverse();
-			const bytesString = `
-		LE: \`${hexSequence(leSeq.slice(0, 4))}_${hexSequence(leSeq.slice(5, 8))}\`
-
-		BE: \`${hexSequence(bytes.slice(0, 4))}_${hexSequence(bytes.slice(5, 8))}\`
-		`
+			const bytesString = [
+				`- \`LE: ${hexSequence(leSeq.slice(0, 4))}_${hexSequence(leSeq.slice(5, 8))}\``,
+				`- \`BE: ${hexSequence(bytes.slice(0, 4))}_${hexSequence(bytes.slice(5, 8))}\``,
+			]
+				.join('\n')
 				.split('\t')
 				.join('');
 			return bytesString;
