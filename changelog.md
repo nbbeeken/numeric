@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/nbbeeken/numeric/compare/v0.0.4...v0.0.5) (2022-06-12)
+
+
+### Bug Fixes
+
+* floating point display ([3757eda](https://github.com/nbbeeken/numeric/commit/3757eda524b02b763f2a561f6fed19630cb94f1c))
+* use onStartupFinished event ([6c28c47](https://github.com/nbbeeken/numeric/commit/6c28c47555ed525600d9665c26b1e97059bc6e9e))
+
 ### [0.0.4](https://github.com/nbbeeken/numeric/compare/v0.0.3...v0.0.4) (2022-06-12)
 
 
