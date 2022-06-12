@@ -9,15 +9,17 @@
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
+			"trace": true,
 			"args": [
 				"--extensionDevelopmentKind=web",
-				"--extensionDevelopmentPath=${workspaceFolder}",
-				"${workspaceFolder}/workspace"
+				// "--disable-extensions",
+				"--extensionDevelopmentPath=D:/Dev/numeric/numeric",
+				// "${workspaceFolder}/workspace"
 			],
 			"outFiles": [
-				"${workspaceFolder}/dist/**/*.js"
+				"${workspaceFolder}/dist/*.js"
 			],
-			"preLaunchTask": "${defaultBuildTask}"
+			// "preLaunchTask": "${defaultBuildTask}"
 		},
 		{
 			"name": "Extension Tests",

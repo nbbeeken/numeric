@@ -1,35 +1,73 @@
 import * as vscode from 'vscode';
-import { makeMarkdown, parseNumber } from './parser';
+import { Logger } from './logger';
+import { makeMarkdown, NUMERIC_RX, parseNumber } from './parser';
+import { tryFn } from './utils';
+
+export let logger: Logger;
 
 export async function activate(context: vscode.ExtensionContext) {
-	context.subscriptions.push(vscode.languages.registerHoverProvider('*', await createHoverProvider('javascript')));
+	logger = new Logger();
+	logger.log('activate numeric');
+	context.subscriptions.push(vscode.languages.registerHoverProvider('*', await createHoverProvider()));
 }
 
 export function deactivate() {}
 
-const makeProvider = (fn: (word: string, line: string) => vscode.MarkdownString | undefined) => ({
+const makeProvider = (
+	fn: (document: vscode.TextDocument, position: vscode.Position) => vscode.MarkdownString | undefined
+) => ({
 	provideHover(
 		document: vscode.TextDocument,
 		position: vscode.Position,
 		token: vscode.CancellationToken
 	): vscode.ProviderResult<vscode.Hover> {
-		const word = document.getText(document.getWordRangeAtPosition(position));
-		const line = document.lineAt(position).text;
-
-		const content = fn(word, line);
-
-		if (content) {
-			return new vscode.Hover(content);
-		} else {
+		const { result, error } = tryFn(fn, document, position);
+		if (error || result == null) {
+			logger.log(`${error}`);
 			return null;
 		}
+		return new vscode.Hover(result);
 	},
 });
 
-async function createHoverProvider(language: string): Promise<vscode.HoverProvider> {
-	return makeProvider((word: string) => {
-		const n = parseNumber(word);
-		const markdown = makeMarkdown(n);
+async function createHoverProvider(): Promise<vscode.HoverProvider> {
+	return makeProvider((document: vscode.TextDocument, position: vscode.Position) => {
+		const word = document.getText(document.getWordRangeAtPosition(position, /\S+/));
+
+		logger.log('word', word);
+
+		const regexps = Object.entries(NUMERIC_RX);
+
+		let bestMatch = undefined;
+		let matchedText;
+		for (const [name, regex] of regexps) {
+			const wordRange = document.getWordRangeAtPosition(position, regex);
+			matchedText = document.getText(wordRange);
+			if (matchedText.length <= word.length + 3 && matchedText.length >= word.length - 3) {
+				bestMatch = name;
+				break;
+			}
+		}
+
+		if (matchedText?.includes(' ') || matchedText?.includes('\n') || bestMatch == null) {
+			return;
+		}
+
+		logger.log('matchedText', JSON.stringify(matchedText), typeof matchedText);
+		logger.log('bestMatch', JSON.stringify(bestMatch), typeof bestMatch);
+
+		if (typeof matchedText !== 'string') {
+			throw new Error('Must match something!!!');
+		}
+
+		const line = document.lineAt(position).text;
+
+		const { result, error } = tryFn(parseNumber, matchedText);
+		if (error || typeof result === 'undefined') {
+			logger.log(`err ${error}`);
+			return new vscode.MarkdownString(`issue parsing - ${error}`);
+		}
+		let markdown = makeMarkdown(result);
 		return new vscode.MarkdownString(markdown);
 	});
 }
