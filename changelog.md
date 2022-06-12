@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/nbbeeken/numeric/compare/v0.0.3...v0.0.4) (2022-06-12)
+
+
+### Bug Fixes
+
+* parser display and filtering values ([ccae8de](https://github.com/nbbeeken/numeric/commit/ccae8de81679e5f672b98bf775225dfedf0475a8))
+
 ### [0.0.3](https://github.com/nbbeeken/numeric/compare/v0.0.2...v0.0.3) (2021-11-05)
 
 
