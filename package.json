@@ -6,7 +6,7 @@
   "description": "Hover to see numeric translations",
   "version": "0.0.5",
   "engines": {
-    "vscode": "^1.68.0"
+    "vscode": "^1.85.0"
   },
   "categories": [
     "Other"
