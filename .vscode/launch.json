@@ -13,8 +13,8 @@
 			"args": [
 				"--extensionDevelopmentKind=web",
 				// "--disable-extensions",
-				"--extensionDevelopmentPath=D:/Dev/numeric/numeric",
-				// "${workspaceFolder}/workspace"
+				"--extensionDevelopmentPath=${workspaceFolder}",
+				"${workspaceFolder}/workspace"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/*.js"

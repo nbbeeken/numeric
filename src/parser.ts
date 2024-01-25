@@ -111,6 +111,12 @@ export function makeMarkdown(n: number | bigint): string {
 	if (absValue <= 0o777n) {
 		translations.push(`- \`${isNegative ? '-' : ''}0o${absValue.toString(8).padStart(3, '0')}\``);
 	}
+
+	if (bigIntValue >= 32 && bigIntValue <= 126) {
+		// Can be ascii
+		translations.push(`- \`${String.fromCharCode(Number(bigIntValue))}\``);
+	}
+
 	const string = translations.join('\n');
 
 	return string;
