@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/nbbeeken/numeric/compare/v0.0.5...v0.0.6) (2024-01-25)
+
+
+### Features
+
+* add ascii translations of numbers between [32, 126] ([7f7791b](https://github.com/nbbeeken/numeric/commit/7f7791b9cb97675cb80da2f0346420ee8d1986cf))
+* bump vscode engine to `^1.85.0` ([c81eaa6](https://github.com/nbbeeken/numeric/commit/c81eaa6476bc27080de484efa710b5f8ab5fa3e3))
+
 ### [0.0.5](https://github.com/nbbeeken/numeric/compare/v0.0.4...v0.0.5) (2022-06-12)
 
 
