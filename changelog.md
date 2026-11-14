@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/nbbeeken/numeric/compare/v0.0.9...v0.0.10) (2026-11-14)
+
+
+### Bug Fixes
+
+* bin name for vsce ([3492241](https://github.com/nbbeeken/numeric/commit/3492241798973b4898528f8c8c2dd4aaf778475d))
+
 ### [0.0.9](https://github.com/nbbeeken/numeric/compare/v0.0.8...v0.0.9) (2026-11-14)
 
 ### [0.0.8](https://github.com/nbbeeken/numeric/compare/v0.0.7...v0.0.8) (2026-11-14)
