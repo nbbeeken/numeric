@@ -33,7 +33,7 @@
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "release": "standard-version -i changelog.md",
-    "publish": "@vscode/vsce publish --oidc"
+    "publish": "vsce publish --oidc"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.7",
