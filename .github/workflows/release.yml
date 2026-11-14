@@ -10,6 +10,9 @@ jobs:
   build:
     name: Upload Release Asset
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -58,7 +61,6 @@ jobs:
           asset_content_type: application/vsix
 
       - name: Publish Extension
-        run: |
-          npm run publish
+        run: npm run publish
         env:
           VSCE_PAT: ${{ secrets.VS_MARKETPLACE }}
