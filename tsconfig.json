@@ -5,6 +5,7 @@
 		"lib": [
 			"ES2020"
 		],
+		"types": ["node"],
 		"sourceMap": true,
 		"rootDir": "src",
 		"noEmit": true,
